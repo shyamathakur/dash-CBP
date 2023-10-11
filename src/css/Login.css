@@ -1,0 +1,10 @@
+.img-fluid {
+    max-width: 100%;
+    width: 500px;
+    /* height: 600px; */
+} 
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    width: 500px;
+}
