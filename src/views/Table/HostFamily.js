@@ -552,7 +552,7 @@ const DataTableWithButtons = () => {
                 <Trash size={12} className='me-1' />
                 <User size={12} />
               </td>
-            </tr>
+            </tr> 
             <tr>
               <td><Input type='checkbox' /></td>
               <td>
