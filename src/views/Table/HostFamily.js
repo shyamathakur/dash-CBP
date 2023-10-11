@@ -4,6 +4,8 @@ import { Fragment, useState, forwardRef } from 'react'
 // ** Table Data & Columns
 import { data, columns } from './data'
 
+import { Link } from 'react-router-dom'
+
 // ** Add New Modal Component
 import AddNewModal from './AddNewModal'
 
@@ -304,10 +306,13 @@ const DataTableWithButtons = () => {
               />
             </Col>
           </Row>
-          <Button className='ms-2' color='primary' onClick={() => setModalOpened(!modalOpened)}>
-            <Plus size={12} />
-            <span className='align-middle ms-50'>New Family</span>
-          </Button>
+          <Link to="/wizard">
+            {/* <Button className='ms-2' color='primary' onClick={() => setModalOpened(!modalOpened)}>
+              <Plus size={12} />
+              <span className='align-middle ms-50'>New Family</span>
+            </Button> */}
+            <span>Create an account</span>
+          </Link>
         </CardHeader>
         <Table size='sm' responsive>
           <thead>
@@ -552,7 +557,7 @@ const DataTableWithButtons = () => {
                 <Trash size={12} className='me-1' />
                 <User size={12} />
               </td>
-            </tr> 
+            </tr>
             <tr>
               <td><Input type='checkbox' /></td>
               <td>

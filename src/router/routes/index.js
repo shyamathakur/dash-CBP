@@ -12,6 +12,7 @@ import PublicRoute from "@components/routes/PublicRoute";
 
 // ** Utils
 import { isObjEmpty } from "@utils";
+import Wizard from "../../views/wizard";
 
 const getLayout = {
   blank: <BlankLayout />,
@@ -58,6 +59,10 @@ const Routes = [
   {
     path: "/hostFamily",
     element: <HostFamily />,
+  },
+  {
+    path: "/wizard",
+    element: <Wizard/>,
   },
   {
     path: "/PartTime",
