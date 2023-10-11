@@ -311,7 +311,10 @@ const DataTableWithButtons = () => {
               <Plus size={12} />
               <span className='align-middle ms-50'>New Family</span>
             </Button> */}
-            <span>Create an account</span>
+                <Button className='ms-2' color='primary'>
+              <Plus size={12} />
+              <span className='align-middle ms-50'>New Family</span>
+            </Button>
           </Link>
         </CardHeader>
         <Table size='sm' responsive>
