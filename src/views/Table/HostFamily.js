@@ -2,17 +2,11 @@
 import { Fragment, useState, forwardRef } from 'react'
 
 // ** Table Data & Columns
-import { data, columns } from './data'
+import { data } from './data'
 
 import { Link } from 'react-router-dom'
 
-// ** Add New Modal Component
-import AddNewModal from './AddNewModal'
-
-// ** Third Party Components
-import ReactPaginate from 'react-paginate'
-import DataTable from 'react-data-table-component'
-import { ChevronDown, Share, Printer, FileText, File, Grid, Copy, Plus, User, Eye } from 'react-feather'
+import { Plus, User, Eye } from 'react-feather'
 
 // ** Reactstrap Imports
 import {
@@ -32,99 +26,9 @@ import {
   Badge, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap'
 
-
-
-
-import defaultAvatar from "@src/assets/images/portrait/small/avatar-s-11.jpg";
-
 // ** Icons Imports
 import { MoreVertical, Edit, Trash } from 'react-feather'
-
-// ** Reactstrap Imports
-
-const avatarGroupData1 = [
-  {
-    title: 'Melissa',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  },
-  {
-    title: 'Jana',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  },
-  {
-    title: 'Halla',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  }
-]
-
-const avatarGroupData2 = [
-  {
-    title: 'Wing',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  },
-  {
-    title: 'Octavia',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  },
-  {
-    title: 'Benedict',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  }
-]
-
-const avatarGroupData3 = [
-  {
-    title: 'Jade',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  },
-  {
-    title: 'Alisa',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  },
-  {
-    title: 'Alisa',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  }
-]
-
-const avatarGroupData4 = [
-  {
-    title: 'Alexa',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  },
-  {
-    title: 'Lee',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  },
-  {
-    title: 'Shellie',
-    img: defaultAvatar,
-    imgHeight: 22,
-    imgWidth: 22
-  }
-]
+import "./HostFamily.css"
 
 
 // ** Bootstrap Checkbox Component
@@ -136,15 +40,10 @@ const BootstrapCheckbox = forwardRef((props, ref) => (
 
 const DataTableWithButtons = () => {
   // ** States
-  const [modal, setModal] = useState(false)
-  const [currentPage, setCurrentPage] = useState(0)
   const [searchValue, setSearchValue] = useState('')
   const [filteredData, setFilteredData] = useState([])
 
-  // ** Function to handle Modal toggle
-  const handleModal = () => setModal(!modal)
   const [modalOpened, setModalOpened] = useState(false)
-  const [modalClosed, setModalClosed] = useState(false)
   // ** Function to handle filter
   const handleFilter = e => {
     const value = e.target.value
@@ -190,84 +89,11 @@ const DataTableWithButtons = () => {
     }
   }
 
-  // ** Function to handle Pagination
-  const handlePagination = page => {
-    setCurrentPage(page.selected)
-  }
-
-  // ** Custom Pagination
-  const CustomPagination = () => (
-    <ReactPaginate
-      previousLabel=''
-      nextLabel=''
-      forcePage={currentPage}
-      onPageChange={page => handlePagination(page)}
-      pageCount={searchValue.length ? Math.ceil(filteredData.length / 7) : Math.ceil(data.length / 7) || 1}
-      breakLabel='...'
-      pageRangeDisplayed={2}
-      marginPagesDisplayed={2}
-      activeClassName='active'
-      pageClassName='page-item'
-      breakClassName='page-item'
-      nextLinkClassName='page-link'
-      pageLinkClassName='page-link'
-      breakLinkClassName='page-link'
-      previousLinkClassName='page-link'
-      nextClassName='page-item next-item'
-      previousClassName='page-item prev-item'
-      containerClassName='pagination react-paginate separated-pagination pagination-sm justify-content-end pe-1 mt-1'
-    />
-  )
-
-  // ** Converts table to CSV
-  function convertArrayOfObjectsToCSV(array) {
-    let result
-
-    const columnDelimiter = ','
-    const lineDelimiter = '\n'
-    const keys = Object.keys(data[0])
-
-    result = ''
-    result += keys.join(columnDelimiter)
-    result += lineDelimiter
-
-    array.forEach(item => {
-      let ctr = 0
-      keys.forEach(key => {
-        if (ctr > 0) result += columnDelimiter
-
-        result += item[key]
-
-        ctr++
-      })
-      result += lineDelimiter
-    })
-
-    return result
-  }
-
-  // ** Downloads CSV
-  function downloadCSV(array) {
-    const link = document.createElement('a')
-    let csv = convertArrayOfObjectsToCSV(array)
-    if (csv === null) return
-
-    const filename = 'export.csv'
-
-    if (!csv.match(/^data:text\/csv/i)) {
-      csv = `data:text/csv;charset=utf-8,${csv}`
-    }
-
-    link.setAttribute('href', encodeURI(csv))
-    link.setAttribute('download', filename)
-    link.click()
-  }
-
   return (
     <Fragment>
       <Card>
-        <CardHeader className='flex-md-row flex-column align-md-items-center align-items-start border-bottom'>
-          <div className='d-flex mt-md-0 mt-1'>
+        <CardHeader className=' border-bottom'>
+          <div className=''>
             <UncontrolledButtonDropdown>
               <DropdownToggle color='secondary' caret outline>
                 <span className='align-middle ms-50'>Select city</span>
@@ -291,33 +117,27 @@ const DataTableWithButtons = () => {
               </DropdownMenu>
             </UncontrolledButtonDropdown>
           </div>
-          <Row className=''>
-            <Col className='d-flex align-items-center justify-content-end mt-1' md='12' lg='12' sm='12'>
-              <Label className='me-1' for='search-input'>
-                Search
-              </Label>
-              <Input
-                className='dataTable-filter mb-50'
-                type='text'
-                bsSize='sm'
-                id='search-input'
-                value={searchValue}
-                onChange={handleFilter}
-              />
-            </Col>
-          </Row>
-          <Link to="/wizard">
-            {/* <Button className='ms-2' color='primary' onClick={() => setModalOpened(!modalOpened)}>
-              <Plus size={12} />
-              <span className='align-middle ms-50'>New Family</span>
-            </Button> */}
-                <Button className='ms-2' color='primary'>
-              <Plus size={12} />
-              <span className='align-middle ms-50'>New Family</span>
-            </Button>
-          </Link>
+          <div className='search-div-button'>
+              <div >
+                <Input
+                  className='input-search'
+                  placeholder='Search Name, Email etc'
+                  type='text'
+                  bsSize='sm'
+                  id='search-input'
+                  value={searchValue}
+                  onChange={handleFilter}
+                />
+              </div>
+            <Link to="/wizard">
+              <Button className='' color='primary'>
+                <Plus size={12} />
+                <span className='align-middle ms-50'>New Family</span>
+              </Button>
+            </Link>
+          </div>
         </CardHeader>
-        <Table size='sm' responsive>
+        <Table  responsive>
           <thead>
             <tr>
               <th><Input type='checkbox' /></th>
@@ -343,14 +163,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -366,14 +186,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -389,14 +209,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -412,14 +232,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -435,14 +255,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -458,14 +278,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -481,14 +301,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -504,14 +324,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -527,14 +347,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -550,14 +370,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -573,14 +393,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
@@ -596,14 +416,14 @@ const DataTableWithButtons = () => {
                 female
               </td>
               <td>
-                <Badge pill color='light-primary' className='me-1'>
+                <Badge pill color='light-primary' className=''>
                   Active
                 </Badge>
               </td>
-              <td>
-                <Eye size={12} className='me-1' />
-                <Edit size={12} className='me-1' />
-                <Trash size={12} className='me-1' />
+              <td className='icon-table-td'>
+                <Eye size={12} className='' onClick={() => setModalOpened(!modalOpened)} />
+                <Edit size={12} className='' />
+                <Trash size={12} className='' />
                 <User size={12} />
               </td>
             </tr>
