@@ -163,7 +163,7 @@ const Dashboard = () => {
                 img={defaultAvatar}
                 imgHeight="140"
                 imgWidth="140"
-                status="online"
+                // status="online"
               />
               <h1 className='mb-1'>Edit User Information</h1>
               <p>Updating user details will receive a privacy audit.</p>
